@@ -1,0 +1,96 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};
+
+ListNode* ReverseList(ListNode* pHead)
+{
+	if(!pHead)
+		return NULL;
+	ListNode *p = pHead;
+	vector<int> vect;
+	while(p)
+	{
+		vect.push_back(p->val);
+		p = p->next;
+	}
+	p = pHead;
+	vector<int>::size_type i=vect.size()-1;
+	while(p)
+	{
+		p->val = vect[i--];
+		p = p->next;
+	}
+	return pHead;
+}
+
+ListNode* ReverseList2(ListNode* pHead)
+{
+	if(!pHead || !pHead->next)
+		return pHead;
+	ListNode *p = pHead,*new_head = pHead->next;
+	p->next = NULL;
+	while(new_head)
+	{
+		ListNode *t = new_head->next;
+		new_head->next = p;
+		p = new_head;
+		if(t)
+			new_head = t;
+		else
+			break;
+	}
+	return new_head;
+}
+ListNode* init(int a[],int n)
+{
+	if(n==0)
+		return NULL;
+	ListNode *head = NULL,*p = NULL;
+	for(int i=0;i<n;++i)
+	{
+		ListNode *nd = new ListNode(a[i]);
+		if(i==0)
+			head = p =nd;
+		else
+		{
+			p->next = nd;
+			p = nd;
+		}
+	}
+	return head;
+}
+
+void print(ListNode *head)
+{
+	ListNode *p = head;
+	while(p)
+	{
+		cout<<p->val<<" ";
+		p = p->next;
+	}
+	cout<<endl;
+}
+
+int main()
+{
+	//int a[]={1,2,3,4,5,6};
+	//ListNode *head = init(a,6);
+	int a[]={1};
+	ListNode *head = init(a,1);
+	print(head);
+	ListNode * new_head = ReverseList(head);
+	print(new_head);
+	print(head);
+	ListNode * h = ReverseList2(head);
+	print(h);
+	return 0;
+}
