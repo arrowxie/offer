@@ -1,0 +1,65 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int min(vector<int> rotateArray,int index1, int index2)
+{	
+	int ret = rotateArray[index1];
+	for(vector<int>::size_type i=index1+1;i<=index2;++i)
+		if(rotateArray[i]<ret)
+			ret = rotateArray[i];
+	return ret;
+}
+int minNumberInRotateArray(vector<int> rotateArray) {
+	vector<int>::size_type length = rotateArray.size();
+	if(length<=0)
+		return 0;
+	if(length==1 || length==2)
+		return rotateArray[length-1];
+	vector<int>::size_type p = 0;
+	vector<int>::size_type q = length-1;
+	vector<int>::size_type mid = p;//如果数组未旋转 第一个数就是最小的数
+	while(rotateArray[p]>=rotateArray[q])
+	{
+		
+		if(q-p==1)
+		{
+			mid = q;
+			break;
+		}
+		mid = (p+q)>>1;
+		if(rotateArray[p]==rotateArray[q] && rotateArray[p]==rotateArray[mid])//针对10111和11101这种情况
+			return min(rotateArray,p,q);
+		if(rotateArray[mid]>=rotateArray[p])
+			p = mid;
+		else if(rotateArray[mid]<=rotateArray[q])
+			q = mid;
+	}
+	return rotateArray[mid];
+}
+
+vector<int> init(int n, int m)
+{
+	vector<int> a;
+	for(int i=0;i<n;i++)
+		a.push_back(i+m);
+	for(int i=0;i<m;i++)
+		a.push_back(i);
+	return a;
+}
+void print(vector<int> vect)
+{
+	for(vector<int>::size_type i=0;i!=vect.size();++i)
+		cout<<vect[i]<<" ";
+	cout<<endl;
+}
+int main()
+{
+	//vector<int> a = init(4,3);
+	//vector<int> a = init(0,1);	
+	//vector<int> a = init(3,4);
+	vector<int> a = init(5,1);
+	print(a);
+	cout<<minNumberInRotateArray(a)<<endl;
+	return 0;
+}
