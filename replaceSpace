@@ -1,0 +1,41 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+string replaceSpace(string str) {
+	int space_num = 0;
+	string::size_type length = str.size();
+	//if(length==0)
+	//	return str;
+	for(string::size_type i=0;i<length;++i)
+	{
+		if(str[i]==' ')
+			space_num++;
+	}
+	int bias = 2*space_num;
+	string::size_type new_length = length+bias;
+	str.resize(new_length);
+	for(int j=length-1;j>=0;--j)
+	{		
+		if(str[j]!=' ')
+		{
+			str[j+bias]=str[j];			
+		}
+		else
+		{
+			str[j+bias] = '0';
+			--bias;
+			str[j+bias] = '2';
+			--bias;
+			str[j+bias] = '%';
+		}
+	}
+	return str;
+}
+
+int main()
+{
+	string str = "we are happy";
+	cout<<replaceSpace(str)<<endl;
+	return 0;
+}
