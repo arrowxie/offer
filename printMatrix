@@ -1,0 +1,37 @@
+class Solution {
+public:
+	vector<int> printMatrix(vector<vector<int> > matrix) {
+		int row = matrix.size();
+		int coloumn = matrix[0].size();
+		if(row==0 || coloumn==0)
+			return ret;
+		for(int i=0;row>i*2 && coloumn>i*2;i++)
+			print(i,row,coloumn,matrix);
+		return ret;
+	}
+
+private:
+	vector<int> ret;
+	void print(int s, int row, int coloumn, vector<vector<int> > matrix){
+		int end_row = row-s-1;
+		int end_coloumn = coloumn-s-1;
+		for(int i=s;i<=end_coloumn;i++)
+			ret.push_back(matrix[s][i]);
+		if(s<end_row)//至少有两行
+		{
+			for(int i=s+1;i<=end_row;i++)
+				ret.push_back(matrix[i][end_coloumn]);
+		}
+		if(s<end_row && s<end_coloumn)//至少有两行和两列
+		{
+			for(int i=end_coloumn-1; i>=s;i--)
+				ret.push_back(matrix[end_row][i]);
+		}
+		if(s<end_row-1 && s<end_coloumn)//至少有三行两列
+		{
+			for(int i=end_row-1; i>s;i--)
+				ret.push_back(matrix[i][s]);		
+		}
+	}
+	
+};	
