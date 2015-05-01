@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+
+int  NumberOf1(int n) {
+	 if(n==0)
+		return 0;
+	int count=0;
+	while(n)
+	{
+		n = n&(n-1);
+		count++;
+	}
+	return count;
+}
+
+int  NumberOf1_2(int n) {
+	 if(n==0)
+		return 0;
+	int temp = 1;
+	int count=0;
+	while(temp)
+	{
+		if(n&temp)
+			count++;
+		temp<<=1;
+	}
+	return count;
+}
+
+int main()
+{
+	int n=0;
+	int n1=-5;
+	int n2 = 1000;
+	cout<<NumberOf1(n)<<" "<<NumberOf1_2(n)<<endl;
+	cout<<NumberOf1(n1)<<" "<<NumberOf1_2(n1)<<endl;
+	cout<<NumberOf1(n2)<<" "<<NumberOf1_2(n2)<<endl;
+	return 0;
+}
